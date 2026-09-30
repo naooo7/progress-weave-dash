@@ -4,3 +4,4 @@
 - [x] Replace weekly dots with a fixed-height fill graph while preserving section order.
 - [x] Polish Results hierarchy, progress, summary, and actions.
 - [x] Validate empty/populated Home and Results on mobile and desktop.
+- [x] Add a persistent desktop sidebar without changing page content or mobile navigation.
