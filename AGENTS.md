@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep activity persistence local-first through the existing activity store because this prototype has no connected backend.
+- Keep institution abbreviations in compact selectors/data contexts, but use official institution names in narrative Home copy.
