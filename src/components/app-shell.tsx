@@ -10,11 +10,54 @@ const tabs = [
   { to: "/profile", label: "Profile", icon: User },
 ] as const;
 
+function DesktopSidebar() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  return (
+    <aside className="fixed inset-y-0 left-0 z-30 hidden w-56 flex-col border-r border-border bg-surface md:flex">
+      <div className="flex h-20 items-center px-7">
+        <Link
+          to="/"
+          aria-label="Fundamental home"
+          className="text-[20px] font-bold leading-none tracking-[-0.03em]"
+        >
+          Fundamental<span className="text-primary">.</span>
+        </Link>
+      </div>
+
+      <nav aria-label="Primary navigation" className="px-3 pt-2">
+        <ul className="space-y-1">
+          {tabs.map(({ to, label, icon: Icon }) => {
+            const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
+            return (
+              <li key={to}>
+                <Link
+                  to={to}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "tap flex h-10 items-center gap-3 rounded-lg px-3 text-[14px] font-medium transition-colors",
+                    active
+                      ? "bg-primary-soft text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  )}
+                >
+                  <Icon className="size-[18px]" strokeWidth={active ? 2.2 : 1.8} />
+                  <span>{label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </aside>
+  );
+}
+
 export function BottomNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[430px] border-t border-border bg-background/90 backdrop-blur-xl">
+    <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[430px] border-t border-border bg-background/90 backdrop-blur-xl md:hidden">
       <div className="flex items-stretch px-2 pb-[env(safe-area-inset-bottom)] pt-1.5">
         {tabs.map(({ to, label, icon: Icon }) => {
           const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
@@ -48,14 +91,17 @@ export function Screen({
 }) {
   return (
     <div className="min-h-screen bg-background">
-      <div
-        className={cn(
-          "screen-in mx-auto w-full max-w-[430px] px-5",
-          nav ? "pb-28 pt-5" : "pb-10 pt-5",
-          className,
-        )}
-      >
-        {children}
+      {nav ? <DesktopSidebar /> : null}
+      <div className={cn(nav && "md:pl-56")}>
+        <div
+          className={cn(
+            "screen-in mx-auto w-full max-w-[430px] px-5",
+            nav ? "pb-28 pt-5 md:pb-10" : "pb-10 pt-5",
+            className,
+          )}
+        >
+          {children}
+        </div>
       </div>
       {nav ? <BottomNav /> : null}
     </div>

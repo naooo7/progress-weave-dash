@@ -11,3 +11,4 @@
 
 - Keep activity persistence local-first through the existing activity store because this prototype has no connected backend.
 - Keep institution abbreviations in compact selectors/data contexts, but use official institution names in narrative Home copy.
+- Main navigation uses the shared Screen shell: a fixed left sidebar at desktop widths and the existing bottom bar on mobile, keeping focused nav-free screens unchanged.
